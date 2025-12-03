@@ -218,7 +218,8 @@ export async function getDrsImprovementAdvice(params: {
     const res = await axios.post(
       `${baseURL}/clm/predict`,
       {
-        diff: combinedDiff,
+        // worldofcode CLM API는 body.code_diff 를 요구합니다.
+        code_diff: combinedDiff,
         commit_message: commitMessage,
       },
       token
