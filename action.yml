@@ -1,0 +1,21 @@
+name: "DRS PR Reviewer AI"
+description: "DRS-LLM 기반으로 GitHub Pull Request의 위험도를 분석하고 자동 리뷰 코멘트를 남깁니다."
+author: "YOUR_NAME_OR_ORG"
+
+inputs:
+  drs-api-base-url:
+    description: "DRS-LLM HTTP API Base URL (예: https://your-drs-server/drs-api)"
+    required: false
+  drs-api-token:
+    description: "DRS-LLM API 인증 토큰 (선택)"
+    required: false
+
+runs:
+  using: "node20"
+  main: "dist/action.js"
+
+branding:
+  icon: "shield"
+  color: "purple"
+
+
