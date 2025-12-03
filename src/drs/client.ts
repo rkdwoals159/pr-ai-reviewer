@@ -77,9 +77,9 @@ export async function getDrsRiskReport(
   try {
     // worldofcode DRS-LLM seq-cls API:
     // POST {baseURL}/seq-cls/predict_batch
-    // body: [{ diff: string, commit_message: string }, ...]
+    // body: [{ code_diff: string, commit_message: string }, ...]
     const batchRequest = payload.files.map((f) => ({
-      diff: f.patch,
+      code_diff: f.patch,
       commit_message: payload.prTitle ?? "",
     }));
 
