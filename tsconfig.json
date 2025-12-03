@@ -11,7 +11,11 @@
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true
   },
-  "include": ["src"]
+  "include": [
+    "src/action.ts",
+    "src/drs/**/*",
+    "src/review/**/*"
+  ]
 }
 
 
