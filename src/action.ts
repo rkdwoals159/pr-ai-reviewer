@@ -1,7 +1,7 @@
 import { Octokit } from "@octokit/rest";
 import fs from "fs";
 import path from "path";
-import { getDrsRiskReport } from "./drs/client";
+import { getDrsImprovementAdvice, getDrsRiskReport } from "./drs/client";
 import { buildSummaryComment } from "./review/engine";
 
 async function main() {
@@ -69,14 +69,21 @@ async function main() {
     patch: f.patch ?? "",
   }));
 
+  const prTitle: string = event.pull_request.title ?? "";
+
   const drsReport = await getDrsRiskReport({
     repo: `${owner}/${repo}`,
     pullNumber: pull_number,
     files: filesForAnalysis,
-    prTitle: event.pull_request.title ?? "",
+    prTitle,
   });
 
-  const body = buildSummaryComment(drsReport);
+  const improvementAdvice = await getDrsImprovementAdvice({
+    prTitle,
+    files: filesForAnalysis,
+  });
+
+  const body = buildSummaryComment(drsReport, improvementAdvice);
 
   await octokit.issues.createComment({
     owner,
