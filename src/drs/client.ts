@@ -129,52 +129,52 @@ export async function getDrsRiskReport(
         summaryParts.push(`DRS-LLM 분류 레이블: ${label}`);
       }
       summaryParts.push(
-        "DRS-LLM 시퀀스 분류 결과를 기반으로 한 위험도 추정입니다.";
+        "DRS-LLM 시퀀스 분류 결과를 기반으로 한 위험도 추정입니다."
       );
+
+      return {
+        filename: f.filename,
+        riskScore,
+        summary: summaryParts.join(" "),
+      };
+    });
+
+    const overallRisk =
+      items.length > 0
+        ? items.reduce((sum, it) => sum + it.riskScore, 0) / items.length
+        : 0;
 
     return {
-      filename: f.filename,
-      riskScore,
-      summary: summaryParts.join(" "),
+      overallRisk,
+      items,
+      raw: data,
     };
-  });
+  } catch (error: any) {
+    const statusPart =
+      (error?.response && `HTTP ${error.response.status}`) || "";
+    const messagePart = error?.message || "unknown error";
+    const msg =
+      statusPart && messagePart ? `${statusPart} - ${messagePart}` : statusPart || messagePart;
 
-  const overallRisk =
-    items.length > 0
-      ? items.reduce((sum, it) => sum + it.riskScore, 0) / items.length
-      : 0;
+    console.warn(
+      `[DRS] API 호출 실패, mock 위험도 점수로 대체합니다: ${msg}`
+    );
 
-  return {
-    overallRisk,
-    items,
-    raw: data,
-  };
-} catch (error: any) {
-  const statusPart =
-    (error?.response && `HTTP ${error.response.status}`) || "";
-  const messagePart = error?.message || "unknown error";
-  const msg =
-    statusPart && messagePart ? `${statusPart} - ${messagePart}` : statusPart || messagePart;
-
-  console.warn(
-    `[DRS] API 호출 실패, mock 위험도 점수로 대체합니다: ${msg}`
-  );
-
-  if (error?.response?.data) {
-    try {
-      console.warn(
-        "[DRS] API error response body:",
-        typeof error.response.data === "string"
-          ? error.response.data
-          : JSON.stringify(error.response.data, null, 2)
-      );
-    } catch {
-      // stringify 실패 시는 조용히 무시
+    if (error?.response?.data) {
+      try {
+        console.warn(
+          "[DRS] API error response body:",
+          typeof error.response.data === "string"
+            ? error.response.data
+            : JSON.stringify(error.response.data, null, 2)
+        );
+      } catch {
+        // stringify 실패 시는 조용히 무시
+      }
     }
-  }
 
-  return buildMockReport(payload, `DRS API 호출 실패: ${msg}`);
-}
+    return buildMockReport(payload, `DRS API 호출 실패: ${msg}`);
+  }
 }
 
 // CLM API를 사용해 "위험도를 낮추기 위한 개선 제안"을 생성
