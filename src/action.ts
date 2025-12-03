@@ -73,6 +73,7 @@ async function main() {
     repo: `${owner}/${repo}`,
     pullNumber: pull_number,
     files: filesForAnalysis,
+    prTitle: event.pull_request.title ?? "",
   });
 
   const body = buildSummaryComment(drsReport);
