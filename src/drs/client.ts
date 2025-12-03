@@ -150,13 +150,29 @@ export async function getDrsRiskReport(
       raw: data,
     };
   } catch (error: any) {
+    const statusPart =
+      (error?.response && `HTTP ${error.response.status}`) || "";
+    const messagePart = error?.message || "unknown error";
     const msg =
-      (error?.response && `HTTP ${error.response.status}`) ||
-      error?.message ||
-      "unknown error";
+      statusPart && messagePart ? `${statusPart} - ${messagePart}` : statusPart || messagePart;
+
     console.warn(
       `[DRS] API 호출 실패, mock 위험도 점수로 대체합니다: ${msg}`
     );
+
+    if (error?.response?.data) {
+      try {
+        console.warn(
+          "[DRS] API error response body:",
+          typeof error.response.data === "string"
+            ? error.response.data
+            : JSON.stringify(error.response.data, null, 2)
+        );
+      } catch {
+        // stringify 실패 시는 조용히 무시
+      }
+    }
+
     return buildMockReport(payload, `DRS API 호출 실패: ${msg}`);
   }
 }
