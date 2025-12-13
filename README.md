@@ -1,5 +1,6 @@
 한국어 | [English](./README.en.md)
-
+##[주의] 현재 dss-oss 는 2025-11년도에 나온 논문으로, confidence값만 측정가능합니다.
+## 어느부분을 개선해야하는지 PR분석기능은 정상적으로 동작하지 않습니다. 같이 기다려 보아요
 ## gh-PR-reviewerAI
 
 **DRS-OSS / DRS-LLM 아이디어를 활용해 GitHub Pull Request의 위험도를 점수화하고, 자동 리뷰 코멘트를 남겨주는 GitHub Actions 기반 오픈소스 프로젝트**입니다.
