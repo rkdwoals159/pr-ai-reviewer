@@ -1,10 +1,14 @@
 한국어 | [English](./README.en.md)
 
-### [주의] 현재 dss-oss 는 2025-11년도에 나온 논문으로, confidence값만 측정가능합니다.
+### [주의] dss-oss 는 2025-11년도에 나온 논문으로, confidence와 LLM의 개선 권고 내용을 받을 수 있습니다.
+### 현재 confidence는 java를 기준으로 학습된걸 그대로 가져왔으며, 
+### 코드 변경 내용이 많으면 점수가 정상적으로 잘 안 나오는듯 합니다...
 
-### 해당 기능중 'PR 내용에 대한 분석내용'부분은 정상적으로 동작하지 않습니다. 같이 기다려 보아요
-### confidence 또한 현재 java를 기준으로 학습되어있습니다. 자세한건 논문을 참고해주세요
-### 테스트는 해당 레포에 PR을 날려주시면 됩니다
+### 또한 기능중 'PR 개선 제안'부분은 정상적으로 동작하지 않습니다. 같이 기다려 보아요
+<예시>
+<img width="838" height="586" alt="image" src="https://github.com/user-attachments/assets/c2315c3b-197f-48d5-a5e5-b9b0db475cff" />
+
+
 
 ## gh-PR-reviewerAI
 
